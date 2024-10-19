@@ -17,7 +17,7 @@ export default function AdBanners() {
       <Swiper spaceBetween={8}>
         {data?.map((banner, idx) => {
           return (
-            <SwiperSlide key={idx}>
+            <SwiperSlide key={banner.id}>
               <Link to={banner.link}>
                 <Flex direction="column" css={bannerContainerStyles}>
                   <Text bold>{banner.title}</Text>
