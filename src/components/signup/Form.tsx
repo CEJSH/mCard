@@ -8,7 +8,11 @@ import Spacing from '../shared/Spacing'
 import validator from 'validator'
 import { FormValues } from '@/models/signup'
 
-export default function Form() {
+export default function Form({
+  onSubmit,
+}: {
+  onSubmit: (formValues: FormValues) => void
+}) {
   const [formValues, setFormValues] = useState<FormValues>({
     email: '',
     password: '',
@@ -30,8 +34,6 @@ export default function Form() {
   }, [])
 
   const errors = useMemo(() => validate(formValues), [formValues])
-
-  console.log(errors)
 
   const isValidate = Object.keys(errors).length === 0
 
@@ -81,7 +83,9 @@ export default function Form() {
       />
       <FixedBottomButton
         label="회원가입"
-        onClick={() => {}}
+        onClick={() => {
+          onSubmit(formValues)
+        }}
         disabled={isValidate === false}
       />
     </Flex>
@@ -91,6 +95,7 @@ export default function Form() {
 const formContainerStyles = css`
   padding: 24px;
 `
+
 function validate(formValues: FormValues) {
   let errors: Partial<FormValues> = {}
 
