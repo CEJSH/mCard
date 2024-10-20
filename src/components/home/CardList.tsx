@@ -5,6 +5,7 @@ import { getCards } from '@/remote/card'
 import { useInfiniteQuery } from 'react-query'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import Badge from '@shared/Badge'
+import { useNavigate } from 'react-router-dom'
 
 export function CardList() {
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery(
@@ -19,6 +20,9 @@ export function CardList() {
       },
     },
   )
+
+  const navigate = useNavigate()
+
   const loadMore = useCallback(() => {
     if (hasNextPage === false || isFetching) return
     fetchNextPage()
@@ -53,6 +57,9 @@ export function CardList() {
                   card.payback != null ? <Badge label={card.payback} /> : null
                 }
                 withArrow
+                onClick={() => {
+                  navigate(`/card/${card.id}`)
+                }}
               />
             )
           })}
