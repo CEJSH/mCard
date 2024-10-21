@@ -9,7 +9,7 @@ export function AdBannerListAddButton() {
     const batch = writeBatch(store)
 
     adBanners.forEach((banner) => {
-      const docRef = doc(collection(store, COLLECTIONS.BANNER))
+      const docRef = doc(collection(store, COLLECTIONS.ADBANNER))
 
       batch.set(docRef, banner)
     })

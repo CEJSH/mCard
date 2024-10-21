@@ -7,5 +7,12 @@
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "eslint.nodePath": ".yarn/sdks",
   "prettier.prettierPath": ".yarn/sdks/prettier/index.cjs",
-  "cSpell.words": ["Firestore", "Signin", "Signup", "Swiper"]
+  "cSpell.words": [
+    "ADBANNER",
+    "Firestore",
+    "Hipass",
+    "Signin",
+    "Signup",
+    "Swiper"
+  ]
 }
