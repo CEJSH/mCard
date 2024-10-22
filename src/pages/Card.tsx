@@ -43,9 +43,11 @@ export default function CardPage() {
   console.log('data', data)
 
   const { name, corpName, promotion, tags, benefit } = data
-
+  console.log(promotion)
   const subTitle =
-    promotion != null ? removeHtmlTags(promotion.title) : tags.join(',')
+    promotion != null
+      ? removeHtmlTags(promotion.title ?? promotion)
+      : tags.join(',')
 
   return (
     <div>
@@ -79,7 +81,7 @@ export default function CardPage() {
       {promotion != null ? (
         <Flex direction="column" css={termsContainerStyles}>
           <Text bold={true}>유의사항</Text>
-          <Text typography="t7">{removeHtmlTags(promotion.terms)}</Text>
+          <Text typography="t7">{removeHtmlTags(promotion.terms ?? '')}</Text>
         </Flex>
       ) : null}
 

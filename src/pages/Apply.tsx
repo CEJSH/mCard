@@ -52,24 +52,24 @@ export default function ApplyPage() {
 
   const { data: status } = usePollApplyStatus({
     onSuccess: async () => {
-      // await updateApplyCard({
-      //   userId: user?.uid as string,
-      //   cardId: id,
-      //   applyValues: {
-      //     status: APPLY_STATUS.COMPLETE,
-      //   },
-      // })
-      // navigate('/apply/done?success=true', { replace: true })
+      await updateApplyCard({
+        userId: user?.uid as string,
+        cardId: id,
+        applyValues: {
+          status: APPLY_STATUS.COMPLETE,
+        },
+      })
+      navigate('/apply/done?success=true', { replace: true })
     },
     onError: async () => {
-      // await updateApplyCard({
-      //   userId: user?.uid as string,
-      //   cardId: id,
-      //   applyValues: {
-      //     status: APPLY_STATUS.REJECT,
-      //   },
-      // })
-      // navigate('/apply/done?success=false', { replace: true })
+      await updateApplyCard({
+        userId: user?.uid as string,
+        cardId: id,
+        applyValues: {
+          status: APPLY_STATUS.REJECT,
+        },
+      })
+      navigate('/apply/done?success=false', { replace: true })
     },
     enabled: true || readyToPoll,
   })
@@ -87,7 +87,7 @@ export default function ApplyPage() {
     return null
   }
 
-  if (true || readyToPoll || 카드신청중인가) {
+  if (readyToPoll || 카드신청중인가) {
     return <FullPageLoader message={STATUS_MESSAGE[status ?? 'READY']} />
   }
 
