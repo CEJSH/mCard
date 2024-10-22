@@ -10,8 +10,17 @@ import { getAdBanners } from '@/remote/adBanner'
 import 'swiper/css'
 
 export default function AdBanners() {
-  const { data } = useQuery(['adBanners'], () => getAdBanners())
-  console.log(data)
+  const { data, isLoading } = useQuery(['adBanners'], () => getAdBanners())
+  if (data == null || isLoading) {
+    return (
+      <Container>
+        <Flex direction="column" css={bannerContainerStyles}>
+          <Text bold>&nbsp;</Text>
+          <Text typography="t7">&nbsp;</Text>
+        </Flex>
+      </Container>
+    )
+  }
   return (
     <Container>
       <Swiper spaceBetween={8}>

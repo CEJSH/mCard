@@ -78,7 +78,10 @@ export default function CardPage() {
           <Text typography="t7">{removeHtmlTags(promotion.terms)}</Text>
         </Flex>
       ) : null}
-      <FixedBottomButton label="신청하기" onClick={moveToApply} />
+      <FixedBottomButton
+        label="1분만에 신청하고 혜택받기"
+        onClick={moveToApply}
+      />
     </div>
   )
 }
@@ -100,20 +103,7 @@ function IconCheck() {
 }
 
 function removeHtmlTags(text: string) {
-  let output = ''
-  for (let i = 0; i < text.length; i++) {
-    if (text[i] === '<') {
-      for (let j = i + 1; j < text.length; j++) {
-        if (text[j] === '>') {
-          i = j
-          break
-        }
-      }
-    } else {
-      output += text[i]
-    }
-  }
-  return output
+  return text.replace(/<\/?[^>]+(>|$)/g, '')
 }
 
 const termsContainerStyles = css`

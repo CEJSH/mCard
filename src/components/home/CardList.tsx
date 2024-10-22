@@ -18,6 +18,7 @@ export function CardList() {
         console.log('snapshot:', snapshot)
         return snapshot.lastVisible
       },
+      suspense: true,
     },
   )
 
@@ -38,7 +39,7 @@ export function CardList() {
       <InfiniteScroll
         dataLength={cards.length}
         hasMore={hasNextPage ?? false}
-        loader={<></>}
+        loader={<ListRow.Skeleton />}
         next={loadMore}
         scrollThreshold="100px"
       >
