@@ -20,8 +20,6 @@ export default function BasicInfo({
   })
 
   const handleInfoChange = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
-    console.log(e.target.name)
-    console.log(e.target.value)
     setInfoValues((prevValues) => ({
       ...prevValues,
       [e.target.name]: e.target.value,

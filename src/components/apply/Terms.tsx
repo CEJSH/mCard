@@ -16,8 +16,6 @@ export default function Terms({
     )
   })
 
-  console.log('termsAgreements', termsAgreements)
-
   const isAllChecked = Object.values(termsAgreements).every(
     (isChecked) => isChecked,
   )

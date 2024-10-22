@@ -4,16 +4,44 @@ import Apply from '@components/apply'
 import useApplyCardMutation from '@components/apply/hooks/useApplyCardMutation'
 import usePollApplyStatus from '@components/apply/hooks/usePollApplyStatus'
 import { updateApplyCard } from '@remote/apply'
-import { APPLY_STATUS } from '@/models/apply'
-import useUser from '@/hooks/auth/useUser'
+import { APPLY_STATUS } from '@models/apply'
+import useUser from '@hooks/auth/useUser'
 import { useParams, useNavigate } from 'react-router-dom'
+import useAppliedCard from '@components/apply/hooks/useAppliedCard'
+import { useAlertContext } from '@/contexts/AlertContext'
 
 export default function ApplyPage() {
   const navigate = useNavigate()
   const [readyToPoll, setReadyToPoll] = useState(false)
+  const { open } = useAlertContext()
 
   const user = useUser()
   const { id } = useParams() as { id: string }
+
+  const { data } = useAppliedCard({
+    userId: user?.uid as string,
+    cardId: id,
+    options: {
+      onSuccess: (applied) => {
+        if (applied == null) return
+
+        if (applied.status === APPLY_STATUS.COMPLETE) {
+          open({
+            title: '이미 발급이 완료된 카드입니다.',
+            onButtonClick: () => {
+              window.history.back()
+            },
+          })
+
+          return
+        }
+        // 재심사
+        setReadyToPoll(true)
+      },
+      onError: () => {},
+      suspense: true,
+    },
+  })
 
   usePollApplyStatus({
     onSuccess: async () => {
@@ -24,7 +52,7 @@ export default function ApplyPage() {
           status: APPLY_STATUS.COMPLETE,
         },
       })
-      navigate('/apply/done?success=true')
+      navigate('/apply/done?success=true', { replace: true })
     },
     onError: async () => {
       await updateApplyCard({
@@ -34,7 +62,7 @@ export default function ApplyPage() {
           status: APPLY_STATUS.REJECT,
         },
       })
-      navigate('/apply/done?success=false')
+      navigate('/apply/done?success=false', { replace: true })
     },
     enabled: readyToPoll,
   })
@@ -47,6 +75,10 @@ export default function ApplyPage() {
       window.history.back()
     },
   })
+
+  if (data != null && data.status === APPLY_STATUS.COMPLETE) {
+    return null
+  }
 
   // TODO 개선
   if (readyToPoll || 카드신청중인가) {
