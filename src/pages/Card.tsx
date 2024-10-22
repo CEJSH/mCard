@@ -4,14 +4,17 @@ import { getCard } from '@/remote/card'
 import { css } from '@emotion/react'
 import { motion } from 'framer-motion'
 import Top from '@shared/Top'
-import ListRow from '@/components/shared/ListRow'
-import FixedBottomButton from '@/components/shared/FixedBottomButton'
-import Flex from '@/components/shared/Flex'
-import Text from '@/components/shared/Text'
+import ListRow from '@shared/ListRow'
+import FixedBottomButton from '@shared/FixedBottomButton'
+import Flex from '@shared/Flex'
+import Text from '@shared/Text'
 import { useNavigate } from 'react-router-dom'
 import { useCallback } from 'react'
 import useUser from '@/hooks/auth/useUser'
 import { useAlertContext } from '@/contexts/AlertContext'
+import Spacing from '@shared/Spacing'
+
+import Review from '@components/card/Review'
 
 export default function CardPage() {
   const navigate = useNavigate()
@@ -72,12 +75,20 @@ export default function CardPage() {
           )
         })}
       </ul>
+
       {promotion != null ? (
         <Flex direction="column" css={termsContainerStyles}>
           <Text bold={true}>유의사항</Text>
           <Text typography="t7">{removeHtmlTags(promotion.terms)}</Text>
         </Flex>
       ) : null}
+
+      <Spacing size={1000} />
+
+      <Review />
+
+      <Spacing size={100} />
+
       <FixedBottomButton
         label="1분만에 신청하고 혜택받기"
         onClick={moveToApply}
